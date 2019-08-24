@@ -1,18 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../store/store';
+import ChatBubble from '../ui/ChatBubble';
 
 const MessageOverview: FunctionComponent = () => {
   const messages = useSelector((store: ApplicationState) => store.messages.messages);
 
-  console.log(messages);
-
   return (
     <>
       {messages.map((message, index) => (
-        <p key={index}>
-          {message}
-        </p>
+        <ChatBubble key={index} user={message.sender} messages={[message.content]} isSelf={message.isSelf} />
       ))}
     </>
   );

@@ -14,6 +14,13 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     width: 100%;
     height: 100%;
+    font-family: 'Lato', sans-serif;
+  }
+  
+  #root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 `;
 
