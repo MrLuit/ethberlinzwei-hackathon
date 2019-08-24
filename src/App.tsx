@@ -7,6 +7,11 @@ import { Provider } from 'react-redux';
 
 const store = createStore();
 
+import { createNode } from './utils/libp2p';
+
+const node = createNode().then(console.log).catch(console.error);
+console.log(node);
+
 const App: FunctionComponent = () => (
   <Provider store={store}>
     <HashRouter>
