@@ -2,9 +2,11 @@ import { Store, createStore as createReduxStore, applyMiddleware, AnyAction } fr
 import createSagaMiddleware from 'redux-saga';
 import { MessagesState } from './messages';
 import rootReducer from './reducer';
+import { NodeState, rootSaga as nodeSaga } from './node';
 
 export interface ApplicationState {
   messages: MessagesState;
+  node: NodeState;
 }
 
 export const createStore = (): Store<ApplicationState, AnyAction> => {
@@ -12,8 +14,7 @@ export const createStore = (): Store<ApplicationState, AnyAction> => {
 
   const store = createReduxStore(rootReducer, applyMiddleware(sagaMiddleware));
 
-  // TODO: Add sagas
-  // sagaMiddleware.run(fooSaga);
+  sagaMiddleware.run(nodeSaga);
 
   return store;
 };
