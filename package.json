@@ -4,7 +4,7 @@
   "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --config ./webpack/development.ts",
+    "start": "front-end/node_modules/.bin/webpack-dev-server --config ./webpack/development.ts",
     "build": "cross-env NODE_ENV=production webpack --config ./webpack/production.ts"
   },
   "devDependencies": {
@@ -47,6 +47,8 @@
     "react-dom": "^16.9.0",
     "react-hot-loader": "^4.12.11",
     "react-router-dom": "^5.0.1",
+    "redux": "^4.0.4",
+    "redux-saga": "^1.0.5",
     "styled-components": "^4.3.2"
   }
 }

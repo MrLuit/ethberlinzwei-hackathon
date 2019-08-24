@@ -12,5 +12,7 @@
     "noUnusedLocals": true,
     "skipLibCheck": true
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "front-end/node_modules"
+  ]
 }
