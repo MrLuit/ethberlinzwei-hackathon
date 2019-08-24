@@ -104,11 +104,11 @@ export const createNode = async () => {
     console.log('Connection established to:', peer.id.toB58String());
   });
 
-  node.on('start', () => { console.log('t'); });
+  node.on('start', () => { console.log('Node started successfully'); });
 
-console.log('y');
+console.log('Node is starting...');
   await node.start();
-  console.log('x');
+  console.log('Node started!');
 
   const floodSub = new FloodSub(node);
   const startFloodSub = promisify(floodSub.start).bind(floodSub);
