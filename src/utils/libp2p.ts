@@ -104,36 +104,27 @@ export const createNode = async () => {
     console.log('Connection established to:', peer.id.toB58String());
   });
 
-  node.handle('/mycrypto/chat/1.0.0', (protocol, conn) => {
-    pull(
-      conn,
-      pull.map(v => v.toString()),
-      pull.log(),
-      pull.collect((err, array) => {
-        console.log(array);
-      })
-    );
-  });
-
   node.on('start', () => { console.log('t'); });
 
+console.log('y');
   await node.start();
+  console.log('x');
 
   const floodSub = new FloodSub(node);
   const startFloodSub = promisify(floodSub.start).bind(floodSub);
   await startFloodSub();
 
-  floodSub.on('message', message => {
-    console.log(message.from, message.data.toString());
-  });
-
-  floodSub.on('join/mycryptochat', message => {
+  floodSub.on('mycryptochat/message', message => {
+      console.log(message.from, message.data.toString());
     //signed by user
     //pow verify
   });
 
-  floodSub.subscribe('message');
-  floodSub.subscribe('join/mycryptochat');
+  floodSub.subscribe('mycryptochat/message');
+
+  setTimeout(() => {
+      floodSub.publish('mycryptochat/message', new Buffer('message'));
+  }, 5000);
 
   return node;
 };

@@ -9,6 +9,7 @@ export function* rootSaga(): SagaIterator {
 }
 
 export function* connectSaga(): SagaIterator {
+  console.log('t');
   const node = yield call(createNode);
 
   console.log('k');
