@@ -1,10 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import ChatBox from '../../ChatBox';
+import Header from '../../ui/Header';
 
 const Home: FunctionComponent = () => (
   <>
-    <h2>Home page</h2>
-    <p>Lorem ipsum</p>
+    <Header>
+
+    </Header>
     <h2>Chat</h2>
     <ChatBox/>
   </>
