@@ -26,7 +26,7 @@ const ChatBubble: FunctionComponent<Props> = ({ user, messages, isSelf }) => (
   <StyledChatBubble isSelf={isSelf}>
     <Blockie address={user.address} />
     <StyledChatBubbleContent>
-      {messages.map(message => <p>{message}</p>)}
+      {messages.map((message, index) => <p key={index}>{message}</p>)}
     </StyledChatBubbleContent>
   </StyledChatBubble>
 );

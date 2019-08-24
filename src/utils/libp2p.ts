@@ -18,7 +18,7 @@ import { promisify } from 'util';
 
 class Bundle extends Libp2p {
   constructor({ peerInfo }: { peerInfo: any }) {
-      const ws = new WSStar({ id: peerInfo.id });
+    const ws = new WSStar({ id: peerInfo.id });
     super({
       modules: {
         transport: [/*TCP,*/ WebSockets, ws],
@@ -29,7 +29,7 @@ class Bundle extends Libp2p {
       },
       config: {
         dht: {
-          kBucketSize: 20,
+          kBucketSize: 20
           /*enabled: true,
           randomWalk: {
               enabled: true
@@ -37,7 +37,7 @@ class Bundle extends Libp2p {
         },
         EXPERIMENTAL: {
           dht: true,
-            pubsub: true
+          pubsub: true
         },
         /*pubsub: {
           enabled: false
@@ -77,7 +77,7 @@ const bootstrapList = [
   '/dns4/nyc-2.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLV4Bbm51jM9C4gDYZQ9Cy3U6aXMJDAbzgu2fzaDs64',
   '/dns4/node0.preload.ipfs.io/tcp/443/wss/p2p/QmZMxNdpMkewiVZLMRxaNxUeZpDUb34pWjZ1kZvsd16Zic',
   '/dns4/node0.preload.ipfs.io/tcp/443/wss/p2p/Qmbut9Ywz9YEDrz8ySBSgWyJk41Uvm2QJPhwDJzJyGFsD6'
-]
+];
 
 export const createNode = async () => {
   const peerID = await PeerId.create({ bits: 2048 });
@@ -97,16 +97,19 @@ export const createNode = async () => {
   node.on('peer:discovery', peer => {
     console.log(peer);
     console.log('Discovered:', peer.id.toB58String());
-    node.dial(peer, () => {});
+    node.dial(peer, () => {
+    });
   });
 
   node.on('peer:connect', peer => {
     console.log('Connection established to:', peer.id.toB58String());
   });
 
-  node.on('start', () => { console.log('Node started successfully'); });
+  node.on('start', () => {
+    console.log('Node started successfully');
+  });
 
-console.log('Node is starting...');
+  console.log('Node is starting...');
   await node.start();
   console.log('Node started!');
 
@@ -115,7 +118,7 @@ console.log('Node is starting...');
   await startFloodSub();
 
   floodSub.on('mycryptochat/message', message => {
-      console.log(message.from, message.data.toString());
+    console.log(message.from, message.data.toString());
     //signed by user
     //pow verify
   });
@@ -123,7 +126,7 @@ console.log('Node is starting...');
   floodSub.subscribe('mycryptochat/message');
 
   setTimeout(() => {
-      floodSub.publish('mycryptochat/message', new Buffer('message'));
+    floodSub.publish('mycryptochat/message', new Buffer('message'));
   }, 5000);
 
   return node;

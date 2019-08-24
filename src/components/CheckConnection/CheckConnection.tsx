@@ -7,11 +7,14 @@ const CheckConnection: FunctionComponent = ({ children }) => {
   const connection = useSelector((store: ApplicationState) => store.node.connection);
   const dispatch = useDispatch();
 
-  if (!connection) {
-    useEffect(() => {
+  useEffect(() => {
+    if (!connection) {
       dispatch(connect());
-    });
+    }
+    console.log('foo');
+  });
 
+  if (!connection) {
     return <p>Connecting...</p>;
   }
 
