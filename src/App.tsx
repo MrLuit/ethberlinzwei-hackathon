@@ -4,13 +4,9 @@ import { HashRouter } from 'react-router-dom';
 import Routes from './routes';
 import { createStore } from './store/store';
 import { Provider } from 'react-redux';
-import { createNode } from './utils/libp2p';
 import { createGlobalStyle } from 'styled-components';
 
 const store = createStore();
-
-const node = createNode().then(console.log).catch(console.error);
-console.log(node);
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -32,7 +28,7 @@ const App: FunctionComponent = () => (
   <Provider store={store}>
     <GlobalStyle />
     <HashRouter>
-      <Routes/>
+      <Routes />
     </HashRouter>
   </Provider>
 );

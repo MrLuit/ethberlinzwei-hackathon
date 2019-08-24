@@ -10,45 +10,54 @@ const Bootstrap = require('libp2p-bootstrap');
 //const MulticastDNS = require("libp2p-mdns");
 const WebSockets = require('libp2p-websockets');
 const FloodSub = require('libp2p-floodsub');
-//const WSStar = require('libp2p-websocket-star'); // TODO
+const WSStar = require('libp2p-websocket-star'); // TODO
 // libp2p-connection-manager
 import { promisify } from 'util';
 //const secp256k1 = require('libp2p-crypto-secp256k1');
 //import * as crypto from 'libp2p-crypto';
 
 class Bundle extends Libp2p {
-  constructor ({ peerInfo }: { peerInfo: any }) {
+  constructor({ peerInfo }: { peerInfo: any }) {
+      const ws = new WSStar({ id: peerInfo.id });
     super({
       modules: {
-        transport: [ /*TCP,*/ WebSockets],
-          streamMuxer: [SPDY],
-          connEncryption: [SECIO],
-          dht: KadDHT,
-          peerDiscovery: [ /*MulticastDNS,*/ Bootstrap]
+        transport: [/*TCP,*/ WebSockets, ws],
+        streamMuxer: [SPDY],
+        connEncryption: [SECIO],
+        dht: KadDHT,
+        peerDiscovery: [/*MulticastDNS,*/ Bootstrap, ws.discovery]
       },
       config: {
         dht: {
           kBucketSize: 20,
-          enabled: false
+          /*enabled: true,
+          randomWalk: {
+              enabled: true
+          }*/
         },
-        /*EXPERIMENTAL: {
+        EXPERIMENTAL: {
           dht: true,
             pubsub: true
-        },*/
-        pubsub: {
-          enabled: false
         },
+        /*pubsub: {
+          enabled: false
+        },*/
         peerDiscovery: {
+          autoDial: true,
+          webRTCStar: {
+            enabled: true
+          },
+          websocketStar: {
+            enabled: true
+          },
           bootstrap: {
-            interval: 5000,
-              enabled: true,
-              list: [
-              '/ip4/0.0.0.0/tcp/0'
-            ]
+            interval: 20e3,
+            enabled: true,
+            list: bootstrapList
           },
           mdns: {
             interval: 5000,
-              enabled: true
+            enabled: true
           }
         }
       },
@@ -57,35 +66,48 @@ class Bundle extends Libp2p {
   }
 }
 
+const bootstrapList = [
+  '/dns4/ams-1.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd',
+  '/dns4/sfo-1.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLju6m7xTh3DuokvT3886QRYqxAzb1kShaanJgW36yx',
+  '/dns4/lon-1.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLMeWqB7YGVLJN3pNLQpmmEk35v6wYtsMGLzSr5QBU3',
+  '/dns4/sfo-2.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLnSGccFuZQJzRadHn95W2CrSFmZuTdDWP8HXaHca9z',
+  '/dns4/sfo-3.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM',
+  '/dns4/sgp-1.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLSafTMBsPKadTEgaXctDQVcqN88CNLHXMkTNwMKPnu',
+  '/dns4/nyc-1.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLueR4xBeUbY9WZ9xGUUxunbKWcrNFTDAadQJmocnWm',
+  '/dns4/nyc-2.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLV4Bbm51jM9C4gDYZQ9Cy3U6aXMJDAbzgu2fzaDs64',
+  '/dns4/node0.preload.ipfs.io/tcp/443/wss/p2p/QmZMxNdpMkewiVZLMRxaNxUeZpDUb34pWjZ1kZvsd16Zic',
+  '/dns4/node0.preload.ipfs.io/tcp/443/wss/p2p/Qmbut9Ywz9YEDrz8ySBSgWyJk41Uvm2QJPhwDJzJyGFsD6'
+]
+
 export const createNode = async () => {
   const peerID = await PeerId.create({ bits: 2048 });
 
-  console.log('y');
   console.log(peerID);
 
   //const createPeer = promisify(PeerInfo.create);
   const peerInfo = await PeerInfo.create(peerID);
   console.log(peerInfo);
+  peerInfo.multiaddrs.add(`/ip4/127.0.0.1/tcp/15555/ws/p2p-webrtc-star/p2p/${peerInfo.id.toB58String()}`);
   //peerInfo.multiaddrs.add('/ip4/0.0.0.0/tcp/0');
+  //peerInfo.multiaddrs.add(multiaddr("/dns4/ws-star-signal-1.servep2p.com/tcp/443/wss/p2p-websocket-star/"));
 
   const node = new Bundle({ peerInfo });
   console.log(node);
 
-  node.on('peer:discovery', (peer) => {
+  node.on('peer:discovery', peer => {
     console.log(peer);
     console.log('Discovered:', peer.id.toB58String());
-    node.dial(peer, () => {
-    });
+    node.dial(peer, () => {});
   });
 
-  node.on('peer:connect', (peer) => {
+  node.on('peer:connect', peer => {
     console.log('Connection established to:', peer.id.toB58String());
   });
 
   node.handle('/mycrypto/chat/1.0.0', (protocol, conn) => {
     pull(
       conn,
-      pull.map((v) => v.toString()),
+      pull.map(v => v.toString()),
       pull.log(),
       pull.collect((err, array) => {
         console.log(array);
@@ -93,18 +115,19 @@ export const createNode = async () => {
     );
   });
 
-  const start = promisify(node.start).bind(node);
-  await start();
+  node.on('start', () => { console.log('t'); });
+
+  await node.start();
 
   const floodSub = new FloodSub(node);
   const startFloodSub = promisify(floodSub.start).bind(floodSub);
   await startFloodSub();
 
-  floodSub.on('message', (message) => {
+  floodSub.on('message', message => {
     console.log(message.from, message.data.toString());
   });
 
-  floodSub.on('join/mycryptochat', (message) => {
+  floodSub.on('join/mycryptochat', message => {
     //signed by user
     //pow verify
   });
