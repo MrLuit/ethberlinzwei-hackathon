@@ -28,11 +28,15 @@ class Bundle extends Libp2p {
       },
       config: {
         dht: {
-          kBucketSize: 20
+          kBucketSize: 20,
+          enabled: false
         },
-        EXPERIMENTAL: {
+        /*EXPERIMENTAL: {
           dht: true,
             pubsub: true
+        },*/
+        pubsub: {
+          enabled: false
         },
         peerDiscovery: {
           bootstrap: {
