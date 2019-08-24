@@ -1,10 +1,11 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FunctionComponent } from 'react';
+/*import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../store/store';
-import { connect } from '../../store/node';
+import { connect } from '../../store/node';*/
 
 const CheckConnection: FunctionComponent = ({ children }) => {
-  const connection = useSelector((store: ApplicationState) => store.node.connection);
+  // TODO: Uncomment when connection can be made
+  /*const connection = useSelector((store: ApplicationState) => store.node.connection);
   const dispatch = useDispatch();
 
   if (!connection) {
@@ -13,7 +14,7 @@ const CheckConnection: FunctionComponent = ({ children }) => {
     });
 
     return <p>Connecting...</p>;
-  }
+  }*/
 
   return <>{children}</>;
 };

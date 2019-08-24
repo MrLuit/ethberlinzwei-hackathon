@@ -38,6 +38,10 @@ const configuration: Configuration = {
         options: {
           name: 'assets/fonts/[name].[ext]'
         }
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
       }
       ]
   },

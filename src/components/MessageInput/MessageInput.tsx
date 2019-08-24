@@ -1,24 +1,43 @@
-import React, { ChangeEvent, FunctionComponent, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addMessage } from '../../store/messages';
+import React, { ChangeEvent, KeyboardEvent, FunctionComponent } from 'react';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { ApplicationState } from '../../store/store';
+import { addMessage, setCurrentMessage } from '../../store/messages';
+
+const StyledMessageInput = styled.input`
+  border: none;
+  outline: none;
+  height: 100%;
+  flex: 1;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 1rem;
+`;
 
 const MessageInput: FunctionComponent = () => {
-  const [message, setMessage] = useState<string>('');
+  const message = useSelector((store: ApplicationState) => store.messages.currentMessage);
   const dispatch = useDispatch();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setMessage(event.target.value);
+    dispatch(setCurrentMessage(event.target.value));
   };
 
-  const handleSend = () => {
-    dispatch(addMessage(message));
-    setMessage('');
+  const handleSend = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      dispatch(setCurrentMessage(''));
+      dispatch(addMessage({
+        sender: {
+          address: '0x4e2579b6D1513B0A6EDb536a151c62909fc8c257'
+        },
+        content: message,
+        isSelf: true
+      }));
+    }
   };
 
   return (
     <>
-      <input type='text' onChange={handleChange} value={message} />
-      <input type='submit' onClick={handleSend} />
+      <StyledMessageInput type='text' onChange={handleChange} onKeyDown={handleSend} value={message} />
     </>
   )
 };
