@@ -4,22 +4,16 @@ import { HashRouter } from 'react-router-dom';
 import Routes from './routes';
 import { createStore } from './store/store';
 import { Provider } from 'react-redux';
-import { createGlobalStyle } from 'styled-components';
 
 const store = createStore();
 
-const GlobalStyle = createGlobalStyle`
-  html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-  }
-`;
+import { createNode } from './utils/libp2p';
+
+const node = createNode().then(console.log).catch(console.error);
+console.log(node);
 
 const App: FunctionComponent = () => (
   <Provider store={store}>
-    <GlobalStyle />
     <HashRouter>
       <Routes/>
     </HashRouter>
