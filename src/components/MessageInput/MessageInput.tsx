@@ -2,7 +2,7 @@ import React, { ChangeEvent, KeyboardEvent, FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../store/store';
-import { addMessage, setCurrentMessage } from '../../store/messages';
+import { sendMessage, setCurrentMessage } from '../../store/messages';
 
 const StyledMessageInput = styled.input`
   border: none;
@@ -26,7 +26,7 @@ const MessageInput: FunctionComponent = () => {
   const handleSend = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       dispatch(setCurrentMessage(''));
-      dispatch(addMessage({
+      dispatch(sendMessage({
         sender: {
           address: '0x4e2579b6D1513B0A6EDb536a151c62909fc8c257'
         },
@@ -39,9 +39,9 @@ const MessageInput: FunctionComponent = () => {
 
   return (
     <>
-      <StyledMessageInput type='text' onChange={handleChange} onKeyDown={handleSend} value={message} />
+      <StyledMessageInput type='text' onChange={handleChange} onKeyDown={handleSend} value={message}/>
     </>
-  )
+  );
 };
 
 export default MessageInput;

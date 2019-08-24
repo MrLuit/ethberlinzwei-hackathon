@@ -25,6 +25,13 @@ export interface SetCurrentMessageAction extends Action {
   payload: string;
 }
 
+export const SEND_MESSAGE = 'SEND_MESSAGE';
+export interface SendMessageAction extends Action {
+  type: typeof SEND_MESSAGE;
+  payload: Message;
+}
+
 export type MessagesActions =
   | AddMessageAction
-  | SetCurrentMessageAction;
+  | SetCurrentMessageAction
+  | SendMessageAction;

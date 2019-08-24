@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 const StyledChatWindow = styled.div`
-  padding: 25px;
   flex: 1;
+  position: relative;
 `;
 
 const ChatWindow: FunctionComponent = ({ children }) => (

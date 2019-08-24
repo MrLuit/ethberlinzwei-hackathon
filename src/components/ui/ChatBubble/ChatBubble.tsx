@@ -26,17 +26,18 @@ const StyledChatBubbleContent = styled.div<{ isSelf: boolean }>`
 `;
 
 const StyledChatText = styled.p`
-  margin: 0;
 `;
 
 const ChatBubble: FunctionComponent<Props> = ({ user, messages, isSelf, timestamp }) => (
-  <StyledChatBubble isSelf={isSelf}>
-    <Blockie address={user.address} />
-    <StyledChatBubbleContent isSelf={isSelf}>
-      <MessageHeader user={user} timestamp={timestamp} />
-      {messages.map((message, index) => <StyledChatText key={index}>{message}</StyledChatText>)}
-    </StyledChatBubbleContent>
-  </StyledChatBubble>
+  <>
+    <MessageHeader user={user} timestamp={timestamp} isSelf={isSelf}/>
+    <StyledChatBubble isSelf={isSelf}>
+      <Blockie address={user.address}/>
+      <StyledChatBubbleContent isSelf={isSelf}>
+        {messages.map((message, index) => <StyledChatText key={index}>{message}</StyledChatText>)}
+      </StyledChatBubbleContent>
+    </StyledChatBubble>
+  </>
 );
 
 export default ChatBubble;

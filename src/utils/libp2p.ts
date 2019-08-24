@@ -5,7 +5,6 @@ const PeerInfo = require('peer-info');
 const PeerId = require('peer-id');
 const SECIO = require('libp2p-secio');
 const KadDHT = require('libp2p-kad-dht');
-const pull = require('pull-stream');
 const Bootstrap = require('libp2p-bootstrap');
 //const MulticastDNS = require("libp2p-mdns");
 const WebSockets = require('libp2p-websockets');
@@ -82,31 +81,25 @@ const bootstrapList = [
 export const createNode = async () => {
   const peerID = await PeerId.create({ bits: 2048 });
 
-  console.log(peerID);
-
   //const createPeer = promisify(PeerInfo.create);
   const peerInfo = await PeerInfo.create(peerID);
-  console.log(peerInfo);
   peerInfo.multiaddrs.add(`/ip4/127.0.0.1/tcp/15555/ws/p2p-webrtc-star/p2p/${peerInfo.id.toB58String()}`);
   //peerInfo.multiaddrs.add('/ip4/0.0.0.0/tcp/0');
   //peerInfo.multiaddrs.add(multiaddr("/dns4/ws-star-signal-1.servep2p.com/tcp/443/wss/p2p-websocket-star/"));
 
   const node = new Bundle({ peerInfo });
-  console.log(node);
 
   node.on('peer:discovery', peer => {
-    console.log(peer);
-    console.log('Discovered:', peer.id.toB58String());
     node.dial(peer, () => {
     });
   });
 
   node.on('peer:connect', peer => {
-    console.log('Connection established to:', peer.id.toB58String());
+    // console.log('Connection established to:', peer.id.toB58String());
   });
 
   node.on('start', () => {
-    console.log('Node started successfully');
+    // console.log('Node started successfully');
   });
 
   console.log('Node is starting...');
@@ -117,19 +110,13 @@ export const createNode = async () => {
   const startFloodSub = promisify(floodSub.start).bind(floodSub);
   await startFloodSub();
 
-  floodSub.on('mycryptochat/message', message => {
-    console.log(message.from, message.data.toString());
-    //signed by user
-    //pow verify
-  });
-
   floodSub.subscribe('mycryptochat/message');
 
-  setTimeout(() => {
+  /*setTimeout(() => {
     floodSub.publish('mycryptochat/message', new Buffer('message'));
-  }, 5000);
+  }, 5000);*/
 
-  return node;
+  return { node, floodSub };
 };
 
 /*(async () => {
