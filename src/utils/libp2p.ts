@@ -17,14 +17,14 @@ import { promisify } from 'util';
 //import * as crypto from 'libp2p-crypto';
 
 class Bundle extends Libp2p {
-  constructor ({ peerInfo }: { peerInfo: any }) {
+  constructor({ peerInfo }: { peerInfo: any }) {
     super({
       modules: {
-        transport: [ /*TCP,*/ WebSockets],
-          streamMuxer: [SPDY],
-          connEncryption: [SECIO],
-          dht: KadDHT,
-          peerDiscovery: [ /*MulticastDNS,*/ Bootstrap]
+        transport: [/*TCP,*/ WebSockets],
+        streamMuxer: [SPDY],
+        connEncryption: [SECIO],
+        dht: KadDHT,
+        peerDiscovery: [/*MulticastDNS,*/ Bootstrap]
       },
       config: {
         dht: {
@@ -41,14 +41,12 @@ class Bundle extends Libp2p {
         peerDiscovery: {
           bootstrap: {
             interval: 5000,
-              enabled: true,
-              list: [
-              '/ip4/0.0.0.0/tcp/0'
-            ]
+            enabled: true,
+            list: ['/ip4/0.0.0.0/tcp/0']
           },
           mdns: {
             interval: 5000,
-              enabled: true
+            enabled: true
           }
         }
       },
@@ -71,21 +69,20 @@ export const createNode = async () => {
   const node = new Bundle({ peerInfo });
   console.log(node);
 
-  node.on('peer:discovery', (peer) => {
+  node.on('peer:discovery', peer => {
     console.log(peer);
     console.log('Discovered:', peer.id.toB58String());
-    node.dial(peer, () => {
-    });
+    node.dial(peer, () => {});
   });
 
-  node.on('peer:connect', (peer) => {
+  node.on('peer:connect', peer => {
     console.log('Connection established to:', peer.id.toB58String());
   });
 
   node.handle('/mycrypto/chat/1.0.0', (protocol, conn) => {
     pull(
       conn,
-      pull.map((v) => v.toString()),
+      pull.map(v => v.toString()),
       pull.log(),
       pull.collect((err, array) => {
         console.log(array);
@@ -100,11 +97,11 @@ export const createNode = async () => {
   const startFloodSub = promisify(floodSub.start).bind(floodSub);
   await startFloodSub();
 
-  floodSub.on('message', (message) => {
+  floodSub.on('message', message => {
     console.log(message.from, message.data.toString());
   });
 
-  floodSub.on('join/mycryptochat', (message) => {
+  floodSub.on('join/mycryptochat', message => {
     //signed by user
     //pow verify
   });
