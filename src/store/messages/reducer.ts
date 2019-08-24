@@ -7,7 +7,9 @@ const INITIAL_STATE: MessagesState = {
       sender: {
         address: '0x68a1e07ac7850c3f10c00bf443a1bad6835b4b47'
       },
-      content: 'Foo bar'
+      content: 'Foo bar',
+      isSelf: false,
+      timestamp: +new Date()
     }
   ],
   currentMessage: ''

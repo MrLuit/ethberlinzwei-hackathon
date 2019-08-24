@@ -5,6 +5,7 @@ export interface Message {
   sender: User;
   content: string;
   isSelf: boolean;
+  timestamp: number;
 }
 
 export interface MessagesState {

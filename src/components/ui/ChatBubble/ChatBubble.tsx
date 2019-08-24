@@ -2,11 +2,13 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { User } from '../../../store/users';
 import Blockie from './Blockie';
+import MessageHeader from '../MessageHeader';
 
 interface Props {
   user: User;
   messages: string[];
   isSelf: boolean;
+  timestamp: number;
 }
 
 const StyledChatBubble = styled.div<{ isSelf: boolean }>`
@@ -15,18 +17,24 @@ const StyledChatBubble = styled.div<{ isSelf: boolean }>`
   margin-bottom: 15px;
 `;
 
-const StyledChatBubbleContent = styled.div`
-  background: #e9e9e9;
+const StyledChatBubbleContent = styled.div<{ isSelf: boolean }>`
+  background: ${({ isSelf }) => isSelf ? '#007896' : '#f1f5f6'}; // eef5fb
   border-radius: 5px;
   padding: 0 15px;
   margin: 0 15px;
+  color: ${({ isSelf }) => isSelf ? 'white' : 'black'};
 `;
 
-const ChatBubble: FunctionComponent<Props> = ({ user, messages, isSelf }) => (
+const StyledChatText = styled.p`
+  margin: 0;
+`;
+
+const ChatBubble: FunctionComponent<Props> = ({ user, messages, isSelf, timestamp }) => (
   <StyledChatBubble isSelf={isSelf}>
     <Blockie address={user.address} />
-    <StyledChatBubbleContent>
-      {messages.map((message, index) => <p key={index}>{message}</p>)}
+    <StyledChatBubbleContent isSelf={isSelf}>
+      <MessageHeader user={user} timestamp={timestamp} />
+      {messages.map((message, index) => <StyledChatText key={index}>{message}</StyledChatText>)}
     </StyledChatBubbleContent>
   </StyledChatBubble>
 );

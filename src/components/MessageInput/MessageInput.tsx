@@ -12,6 +12,7 @@ const StyledMessageInput = styled.input`
   padding: 15px;
   box-sizing: border-box;
   font-size: 1rem;
+  background: #eef5fb;
 `;
 
 const MessageInput: FunctionComponent = () => {
@@ -30,7 +31,8 @@ const MessageInput: FunctionComponent = () => {
           address: '0x4e2579b6D1513B0A6EDb536a151c62909fc8c257'
         },
         content: message,
-        isSelf: true
+        isSelf: true,
+        timestamp: +new Date()
       }));
     }
   };

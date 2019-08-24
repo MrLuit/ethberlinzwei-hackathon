@@ -7,6 +7,7 @@ const StyledChatInput = styled.div`
   border-top: 1px solid #d2d2d2;
   display: flex;
   flex-direction: row;
+  background: #eef5fb;
 `;
 
 const ChatInput: FunctionComponent = ({ children }) => (

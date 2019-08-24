@@ -7,7 +7,7 @@ const StyledChatContainer = styled.div`
   flex: 1;
   
   margin: auto;
-  margin-top: -125px;
+  margin-top: -200px;
   background: white;
   max-width: 1000px;
   width: 100%;

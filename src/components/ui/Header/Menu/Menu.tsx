@@ -1,10 +1,17 @@
 import React, { FunctionComponent } from 'react';
 import SearchButton from '../../../SearchButton';
+import styled from 'styled-components';
+
+const StyledMenu = styled.div`
+  display: flex;
+  height: 100px;
+  align-items: flex-end;
+`;
 
 const Menu: FunctionComponent = () => (
-  <div>
+  <StyledMenu>
     <SearchButton />
-  </div>
+  </StyledMenu>
 );
 
 export default Menu;

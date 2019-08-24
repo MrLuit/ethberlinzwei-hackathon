@@ -5,7 +5,8 @@ import Menu from './Menu';
 
 const StyledHeader = styled.header`
   width: 100%;
-  height: 250px;
+  height: 400px;
+  max-height: 45%;
   background: #163150;
   color: white;
   padding: 25px;

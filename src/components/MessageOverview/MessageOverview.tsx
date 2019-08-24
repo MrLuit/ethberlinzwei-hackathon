@@ -9,7 +9,7 @@ const MessageOverview: FunctionComponent = () => {
   return (
     <>
       {messages.map((message, index) => (
-        <ChatBubble key={index} user={message.sender} messages={[message.content]} isSelf={message.isSelf} />
+        <ChatBubble key={index} user={message.sender} messages={[message.content]} isSelf={message.isSelf} timestamp={message.timestamp} />
       ))}
     </>
   );
