@@ -1,8 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, Fragment } from 'react';
 import styled from 'styled-components';
 import { User } from '../../../store/users';
 import Blockie from './Blockie';
-import BoxImage from './BoxImage';
+import BoxImage from './3Box/BoxImage';
+import BoxName from './3Box/BoxName';
 import MessageHeader from '../MessageHeader';
 
 interface Props {
@@ -34,7 +35,7 @@ const ChatBubble: FunctionComponent<Props> = ({ user, messages, isSelf, timestam
     <MessageHeader user={user} timestamp={timestamp} isSelf={isSelf} />
     <StyledChatBubble isSelf={isSelf}>
       {window.ethereum ?
-        <BoxImage address={user.address} /> :
+        <Fragment><BoxImage address={user.address} /> {/*<BoxName address={user.address} />*/}</Fragment> :
         <Blockie address={user.address} />
       }
       <StyledChatBubbleContent isSelf={isSelf}>
