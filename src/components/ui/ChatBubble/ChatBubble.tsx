@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { User } from '../../../store/users';
 import Blockie from './Blockie';
+import BoxImage from './BoxImage';
 import MessageHeader from '../MessageHeader';
 
 interface Props {
@@ -30,9 +31,12 @@ const StyledChatText = styled.p`
 
 const ChatBubble: FunctionComponent<Props> = ({ user, messages, isSelf, timestamp }) => (
   <>
-    <MessageHeader user={user} timestamp={timestamp} isSelf={isSelf}/>
+    <MessageHeader user={user} timestamp={timestamp} isSelf={isSelf} />
     <StyledChatBubble isSelf={isSelf}>
-      <Blockie address={user.address}/>
+      {window.ethereum ?
+        <BoxImage address={user.address} /> :
+        <Blockie address={user.address} />
+      }
       <StyledChatBubbleContent isSelf={isSelf}>
         {messages.map((message, index) => <StyledChatText key={index}>{message}</StyledChatText>)}
       </StyledChatBubbleContent>
