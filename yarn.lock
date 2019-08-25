@@ -7152,7 +7152,7 @@ libp2p-webrtc-star@~0.16.0:
     stream-to-pull-stream "^1.7.3"
     webrtcsupport "github:ipfs/webrtcsupport"
 
-libp2p-websocket-star-multi@~0.4.3:
+libp2p-websocket-star-multi@0.4.4, libp2p-websocket-star-multi@~0.4.3:
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/libp2p-websocket-star-multi/-/libp2p-websocket-star-multi-0.4.4.tgz#99ed79437ecdf3edbb1cc7b83b9a62901885eeda"
   integrity sha512-+Cj9ghJkqlFTa34tWx0Mi0FZ7LGH4l2rCrgmINZsU/Szq+NbIPb5LFiaJEzyB6vGAOMjC+2J3Ei7luIvrgXzKg==
@@ -7925,6 +7925,18 @@ multiaddr-to-uri@^5.0.0:
   dependencies:
     multiaddr "^6.1.0"
 
+multiaddr@6.1.0, multiaddr@^6.0.2, multiaddr@^6.0.3, multiaddr@^6.0.4, multiaddr@^6.0.5, multiaddr@^6.0.6, multiaddr@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/multiaddr/-/multiaddr-6.1.0.tgz#1f93afce58a33db5cc32a5917d8a14105d94330e"
+  integrity sha512-+XTP3OzG2m6JVcjxA9QBmGDr0Vk8WwnohC/fCC3puXb5qJqfJwLVJLEtdTc6vK7ri/hw+Nn4wyT4LkZaPnvGfQ==
+  dependencies:
+    bs58 "^4.0.1"
+    class-is "^1.1.0"
+    hi-base32 "~0.5.0"
+    ip "^1.1.5"
+    is-ip "^2.0.0"
+    varint "^5.0.0"
+
 multiaddr@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/multiaddr/-/multiaddr-4.0.0.tgz#70a8857c4f737350bc2c56914a70f1263889db33"
@@ -7952,18 +7964,6 @@ multiaddr@^5.0.0:
     lodash.map "^4.6.0"
     varint "^5.0.0"
     xtend "^4.0.1"
-
-multiaddr@^6.0.2, multiaddr@^6.0.3, multiaddr@^6.0.4, multiaddr@^6.0.5, multiaddr@^6.0.6, multiaddr@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/multiaddr/-/multiaddr-6.1.0.tgz#1f93afce58a33db5cc32a5917d8a14105d94330e"
-  integrity sha512-+XTP3OzG2m6JVcjxA9QBmGDr0Vk8WwnohC/fCC3puXb5qJqfJwLVJLEtdTc6vK7ri/hw+Nn4wyT4LkZaPnvGfQ==
-  dependencies:
-    bs58 "^4.0.1"
-    class-is "^1.1.0"
-    hi-base32 "~0.5.0"
-    ip "^1.1.5"
-    is-ip "^2.0.0"
-    varint "^5.0.0"
 
 multibase@~0.6.0:
   version "0.6.0"
