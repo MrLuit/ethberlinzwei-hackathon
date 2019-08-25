@@ -23,7 +23,13 @@ const getProfileData = async () => {
 
   if (!addresses[0]) return null;
 
-  const profile = await getProfile(addresses[0]);
+  let profile = null;
+
+  try {
+    profile = await getProfile(addresses[0]);
+  } catch (e) {
+    return null;
+  }
 
   profile.imageUrl = `https://ipfs.infura.io/ipfs/${
     profile.image[0].contentUrl["/"]
@@ -36,12 +42,14 @@ const getProfileData = async () => {
 
 const getProfileImage = async () => {
   const profileData = await getProfileData();
-  return profileData.imageUrl;
+  if (profileData) return profileData.imageUrl;
+  return null;
 }
 
 const BoxImage: FunctionComponent<Props> = ({ address }) => {
   const [boxImage, setBoxImage] = useState<string>();
 
+  return <Placeholder />;
   useEffect(async () => {
     setBoxImage(await getProfileImage());
   }, [address]);
@@ -50,7 +58,6 @@ const BoxImage: FunctionComponent<Props> = ({ address }) => {
     return <StyledBlockie src={boxImage} />;
   }
 
-  return <Placeholder />;
 };
 
 export default BoxImage;
