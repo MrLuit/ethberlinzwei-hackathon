@@ -34,10 +34,9 @@ const ChatBubble: FunctionComponent<Props> = ({ user, messages, isSelf, timestam
   <>
     <MessageHeader user={user} timestamp={timestamp} isSelf={isSelf} />
     <StyledChatBubble isSelf={isSelf}>
-      {window.ethereum ?
-        <Fragment><BoxImage address={user.address} /> {/*<BoxName address={user.address} />*/}</Fragment> :
+      
         <Blockie address={user.address} />
-      }
+      
       <StyledChatBubbleContent isSelf={isSelf}>
         {messages.map((message, index) => <StyledChatText key={index}>{message}</StyledChatText>)}
       </StyledChatBubbleContent>
@@ -46,3 +45,9 @@ const ChatBubble: FunctionComponent<Props> = ({ user, messages, isSelf, timestam
 );
 
 export default ChatBubble;
+
+/*
+{window.ethereum ?
+        <Fragment><BoxImage address={user.address} /> {/*<BoxName address={user.address} />}</Fragment> :
+        }
+        */
