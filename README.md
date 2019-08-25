@@ -8,4 +8,5 @@ Shoutbox is a decentralised peer-to-peer chat. It can not be manipulated by any 
 Typescript, LibP2P 
 
 ## How to Run
+npm install webpack
 Yarn Start
