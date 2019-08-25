@@ -45,10 +45,11 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "3box": "^1.10.7",
     "@hot-loader/react-dom": "^16.9.0",
     "@nodeutils/defaults-deep": "1.1.0",
-    "libp2p": "0.24.4",
     "ethereum-blockies-base64": "^1.0.2",
+    "libp2p": "0.24.4",
     "libp2p-bootstrap": "0.10.2",
     "libp2p-crypto": "0.17.0",
     "libp2p-crypto-secp256k1": "0.4.0",
