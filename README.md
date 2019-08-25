@@ -6,3 +6,6 @@ Shoutbox is a decentralised peer-to-peer chat. It can not be manipulated by any 
 
 ## Tech Stack
 Typescript, LibP2P 
+
+## How to Run
+Yarn Start
